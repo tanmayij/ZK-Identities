@@ -5,12 +5,12 @@ a prototype system for proving attributes from government-issued identities (dri
 ## project status
 
 ### completed
-- [x] project scaffolding with uv package manager
+- [x] project setup
 - [x] canonical schema definition (pydantic models for driver license records)
 - [x] data normalization pipeline (csv to parquet with validation)
 - [x] quarantine file generation for invalid records
 - [x] cryptographic primitives (blake2b-256 hash, salt derivation, commitment scheme)
-- [x] merkle leaf and internal node hashing with domain separation
+- [x] merle leaf and internal node hashing with domain separation
 
 ### in progress
 - [ ] inner (per-user) merkle tree construction
