@@ -50,6 +50,35 @@ class BlindSignatureIssuer:
         
         return blinded_signature
     
+    def sign_message(self, message_int):
+        """
+        directly sign a message (non-blinded)
+        
+        args:
+            message_int: message m as integer
+        
+        returns:
+            signature s = m^d mod n
+        """
+        n = self.public_key.public_numbers().n
+        d = self.private_key.private_numbers().d
+        
+        # sign: s = m^d mod n
+        signature = pow(message_int, d, n)
+        
+        return signature
+    
+    def verify_signature(self, message_int, signature):
+        """
+        verify unblinded signature
+        
+        check: m == s^e mod n
+        """
+        n = self.public_key.public_numbers().n
+        e = self.public_key.public_numbers().e
+        recovered = pow(signature, e, n)
+        return recovered == message_int
+    
     def save_keys(self, private_path, public_path):
         """save keypair to files"""
         # save private key
