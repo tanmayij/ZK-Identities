@@ -1,0 +1,14 @@
+# data directory
+
+this directory contains input datasets.
+
+## files (not committed to git)
+- `synthetic_driver_license_data.csv` - generated synthetic dataset
+
+## to generate synthetic data
+
+```bash
+python src/generate_dataset.py
+```
+
+note: large csv files are excluded from git to keep repository size manageable.

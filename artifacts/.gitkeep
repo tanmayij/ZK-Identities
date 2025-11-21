@@ -1,0 +1,35 @@
+# artifacts directory
+
+this directory contains generated outputs from the zkid system:
+
+## generated files (not committed to git)
+- `normalized.parquet` - normalized user records
+- `inner_roots.parquet` - per-user merkle trees and commitments
+- `outer_tree_paths.parquet` - global merkle tree paths
+- `global_root.json` - signed global root metadata
+- `issuer_key.pem` - issuer private signing key (secret)
+- `issuer_public_key.pem` - issuer public verification key
+- `issuer_root.sig` - signature over global root
+- `verifier_blind_key.pem` - verifier blind signature key (secret)
+- `verifier_blind_public.pem` - verifier blind signature public key
+- `user_bundles/` - per-user credential bundles (10,000 files)
+- `proofs/` - generated zero-knowledge proofs
+
+## to regenerate all artifacts
+
+```bash
+# step 1: normalize data
+python src/normalize_data.py
+
+# step 2: build inner trees
+python src/build_inner_trees.py
+
+# step 3: build outer tree
+python src/build_outer_tree.py
+
+# step 4: export user bundles
+python src/export_user_bundles.py
+
+# step 5: generate and verify proofs
+python src/complete_flow.py
+```

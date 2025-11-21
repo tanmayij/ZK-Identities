@@ -8,7 +8,7 @@ expected_cols = ["id", "dob", "citizenship", "license_class", "status", "issue_d
 df = pd.read_csv("data/synthetic_driver_license_data.csv")
 assert all(col in df.columns.str.lower() for col in expected_cols), "Dataframe does not contain the expected columns."
 
-#for later -- normaliz the data
+#for later -- normaliz the data (or make skewed workloads)
 def normalize_record(record):
     record["dob"] = pd.to_datetime(record["dob"]).strftime("%Y-%m-%d")
     record["citizenship"] = record["citizenship"].strip().upper()

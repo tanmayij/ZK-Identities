@@ -1,0 +1,74 @@
+# python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# virtual environments
+.venv/
+venv/
+ENV/
+env/
+python_/
+
+# ide
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# os
+.DS_Store
+Thumbs.db
+
+# artifacts and secrets - DO NOT COMMIT
+artifacts/*.pem
+artifacts/*.sig
+artifacts/issuer_key.pem
+artifacts/issuer_public_key.pem
+artifacts/issuer_root.sig
+artifacts/verifier_blind_key.pem
+artifacts/verifier_blind_public.pem
+artifacts/user_bundles/
+artifacts/proofs/
+
+# keep directory structure but ignore large data files
+artifacts/normalized.parquet
+artifacts/inner_roots.parquet
+artifacts/outer_tree_paths.parquet
+
+# raw data
+data/*.csv
+data/*.parquet
+
+# uv
+uv.lock
+.python-version
+
+# jupyter
+.ipynb_checkpoints/
+*.ipynb
+
+# logs
+*.log
+
+# keep these files (examples)
+!artifacts/.gitkeep
+!data/.gitkeep

@@ -1,0 +1,8 @@
+{
+  "root": "4284f303d947d146f23de84c7e0720ce991fe54f3c3a6d51a93055c6c15485b2",
+  "n_users": 10000,
+  "hash_algorithm": "BLAKE2b-256",
+  "tree_depth": 14,
+  "created_utc": "2025-11-20T23:45:33.862560Z",
+  "signature_algorithm": "Ed25519"
+}
