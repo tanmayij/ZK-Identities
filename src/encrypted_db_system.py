@@ -489,17 +489,17 @@ class EncryptedDatabaseServer:
         user_data = {}
         total_leaves = 0
         
-        # Build inner trees with attribute-agnostic leaves
+        #build inner trees with attribute-agnostic leaves
         for uid in matching_users:
             leaves_data = []
             attr_leaves = []
             
             pk_user = self.user_keys[uid]
             
-            # Process attributes in order (using indices)
+            #process attributes in order (using indices)
             for attr_name in self.attribute_order:
                 if attr_name not in self.db[uid]:
-                    continue  # Skip if user doesn't have this attribute
+                    continue  #skip if user doesn't have this attribute
                 
                 ct = self.db[uid][attr_name]
                 attr_index = self.attr_name_to_index[attr_name]
