@@ -411,9 +411,9 @@ class EncryptedDatabaseServer:
         self.issuer = issuer_keypair
         self.schnorr_issuer = SchnorrIssuer(schnorr_keypair)
         
-        # Attribute order: maps names to indices
+        # attribute order: maps names to indices
         # Default: ["age", "country", "score"] if not specified
-        self.attribute_order = attribute_order or ["age", "country", "score"]
+        self.attribute_order = attribute_order or ["age", "country", "score"] #what is a dynamic way of doing this?
         self.attr_name_to_index = {name: idx for idx, name in enumerate(self.attribute_order)}
         
         self.db: Dict[str, Dict[str, DeterministicCiphertext]] = {}
@@ -461,7 +461,7 @@ class EncryptedDatabaseServer:
         self.query_count += 1
         
         metrics = QueryMetrics(query_id=query_id, start_time=time.time())
-        query_nonce = secrets.token_bytes(32)  # Fresh nonce for this query
+        query_nonce = secrets.token_bytes(32)  # fresh nonce for this query
         
         t0 = time.time()
         matching_users = []
@@ -489,17 +489,17 @@ class EncryptedDatabaseServer:
         user_data = {}
         total_leaves = 0
         
-        # Build inner trees with attribute-agnostic leaves
+        #build inner trees with attribute-agnostic leaves
         for uid in matching_users:
             leaves_data = []
             attr_leaves = []
             
             pk_user = self.user_keys[uid]
             
-            # Process attributes in order (using indices)
+            #process attributes in order (using indices)
             for attr_name in self.attribute_order:
                 if attr_name not in self.db[uid]:
-                    continue  # Skip if user doesn't have this attribute
+                    continue  #skip if user doesn't have this attribute
                 
                 ct = self.db[uid][attr_name]
                 attr_index = self.attr_name_to_index[attr_name]
@@ -511,7 +511,7 @@ class EncryptedDatabaseServer:
                     attr_index=attr_index,
                     ciphertext=ct,
                     randomizer=randomizer,
-                    attr_name=attr_name  # Keep for internal use only
+                    attr_name=attr_name  # Keep for internal use only???
                 )
                 leaf_hash = leaf_obj.compute_leaf_hash()
                 leaves_data.append(leaf_hash)
@@ -573,10 +573,11 @@ class EncryptedDatabaseServer:
                 )
                 
                 # Actually sign with Schnorr (non-blind for now)
-                # In full protocol, client would blind this first
+                # In full protocol, client would blind this first i guess
                 schnorr_sig = self.schnorr_issuer.sign_message(leaf_message)
                 
-                # Store by index (not name!)
+                # TODO: do not store attr index either - while client sends the query, pack the pk,sk pair such that
+                # they can derive the index from the keypair itself?
                 attr_data_dict[attr_index] = {
                     'ciphertext': leaf_obj.ciphertext,
                     'leaf_hash': leaf_hash,
@@ -584,7 +585,7 @@ class EncryptedDatabaseServer:
                     'leaf_message': leaf_message,
                     'schnorr_signature': schnorr_sig,
                     'attr_index': attr_index,
-                    # For demo/debug only - would be removed in production:
+                    # For demo/debug only - would be removed in prod:
                     'attr_name': leaf_obj.attr_name
                 }
             
